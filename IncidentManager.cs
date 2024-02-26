@@ -19,17 +19,19 @@ namespace TicketManager
 
         public static async Task ProcessWorkItem(int workItemId)
         {
-            if(!FileHelper.FileExists(workItemId))
+            if(!FileHelper.FileExists(workItemId, "data"))
             {
                 combinedComments = await GetWorkItemDetails(workItemId);
-                await FileHelper.SaveContentAsync(combinedComments, workItemId);
+                await FileHelper.SaveContentAsync(combinedComments, workItemId, "data");
             }
             else
             {
-                combinedComments = FileHelper.GetFileContent(workItemId);
+                combinedComments = FileHelper.GetFileContent(workItemId, "data");
             }
             
             Console.WriteLine(await SummarizationService.SummarizeIncidentDetails(combinedComments));
+            await FileHelper.SaveContentAsync(combinedComments, workItemId, "result");
+
         }
 
         private static async Task<string> GetWorkItemDetails(int workItemId)

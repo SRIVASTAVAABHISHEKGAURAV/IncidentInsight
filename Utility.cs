@@ -31,6 +31,7 @@ namespace TicketManager
         public static string GetAoaiDeploymentName() => config.GetSection("Secrets").Get<Secret>().AoaiDeploymentName;
         public static string GetAoaiEndpoint() => config.GetSection("Secrets").Get<Secret>().AoaiEndpoint;
         public static string GetAoaiKey() => config.GetSection("Secrets").Get<Secret>().AoaiKey;
+        public static string GetPrompt() => config.GetSection("Secrets").Get<Secret>().Prompt;
         public static int GetMaxTokens() => config.GetSection("Secrets").Get<Secret>().MaxTokens;
         public static string CleanHtmlTags(string input) => Regex.Replace(input, "<.*?>", string.Empty);
         private static VssConnection CreateConnection() => new VssConnection(new Uri(GetOrgUri()), new VssBasicCredential(string.Empty, GetPatToken()));
@@ -43,6 +44,7 @@ namespace TicketManager
             public string AoaiDeploymentName { get; set; }
             public string AoaiEndpoint { get; set; }
             public string AoaiKey { get; set; }
+            public string Prompt { get; set; }
             public int MaxTokens { get; internal set; }
         }
     }

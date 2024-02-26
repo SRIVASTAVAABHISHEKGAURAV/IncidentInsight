@@ -4,7 +4,7 @@ IncidentInsight is a solution designed to fetch and summarize incident details, 
 
 ## Features
 
-- **Fetch Incident Details**: Fetches incident details from various sources such as incident management systems, logs, or APIs.
+- **Fetch Incident Details**: Fetches incident details from Azure Dev Ops incident management system.
 - **Summarize Incident Details**: Utilizes advanced natural language processing techniques to summarize incident details into concise and informative summaries.
 - **Easy Integration**: Simple integration with existing incident management workflows or tools.
 - **Customizable**: Flexible configuration options allow customization based on specific needs and preferences.
