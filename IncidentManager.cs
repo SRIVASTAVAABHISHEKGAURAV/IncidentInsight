@@ -29,8 +29,9 @@ namespace TicketManager
                 combinedComments = FileHelper.GetFileContent(workItemId, "data");
             }
             
-            Console.WriteLine(await SummarizationService.SummarizeIncidentDetails(combinedComments));
-            await FileHelper.SaveContentAsync(combinedComments, workItemId, "result");
+            var summary = await SummarizationService.SummarizeIncidentDetails(combinedComments);
+            Console.WriteLine(summary);
+            await FileHelper.SaveContentAsync(Convert.ToString(summary), workItemId, "result");
 
         }
 
