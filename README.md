@@ -4,7 +4,7 @@ IncidentInsight is a solution designed to fetch and summarize incident details, 
 
 ## Features
 
-- **Fetch Incident Details**: Fetches incident details from Azure Dev Ops incident management system.
+- **Fetch Incident Details**: Fetches incident details from different incident management system.
 - **Summarize Incident Details**: Utilizes advanced natural language processing techniques to summarize incident details into concise and informative summaries.
 - **Easy Integration**: Simple integration with existing incident management workflows or tools.
 - **Customizable**: Flexible configuration options allow customization based on specific needs and preferences.
@@ -24,16 +24,20 @@ Edit the `config.json` file to customize settings such as API keys, data sources
 
 ```json
 {
- "PATToken": "<YOUR_PAT_TOKEN>",
- "Uri": "<Project_Uri>",
- "Project": "<Project_Name>",
- "AoaiDeploymentName": "<Deployment_Name>",
- "AoaiEndpoint": "<End_Point>",
- "AoaiKey": "<API_Key>",
- "summarization": {
-     "maxTokens": 100,
-     "temperature": 0.5
-   }
+ "Secrets": {
+    "Environment": "JIRA",
+    "PATToken": "",
+    "ApiToken": "",
+    "UserName": "",
+    "JiraBaseUrl": "",
+    "Uri": "",
+    "Project": "",
+    "AoaiDeploymentName": "",
+    "AoaiEndpoint": "",
+    "AoaiKey": "",
+    "Prompt": "Summarize the incident details provided below and present the summary in bullet points. The incident details include the following:\nBrief description of the incident.\nDate and time of the incident.\nImpact of the incident.\nSteps taken to resolve the incident.\nLessons learned or recommendations for future incidents.",
+    "MaxTokens": 300
+  }
 }
 ```
 
