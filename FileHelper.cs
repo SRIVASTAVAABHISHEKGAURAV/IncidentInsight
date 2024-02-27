@@ -1,17 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using TicketManager;
 
 namespace IncidentInsight
 {
     public static class FileHelper
     {
-        public static async Task SaveContentAsync(string content, int workItemId, string folderName)
+        public static async Task SaveContentAsync(string content, string workItemId, string folderName)
         {
-            await SaveAsync(content, workItemId, GetFolderPath(folderName));
+            await SaveAsync(content, workItemId, GetFolderPath(Utility.GetEnvironment(), folderName));
         }
 
-        private static async Task SaveAsync(string content, int workItemId, string folderPath)
+        private static async Task SaveAsync(string content, string workItemId, string folderPath)
         {
             string filePath = GetFilePath(folderPath, workItemId);
 
@@ -28,15 +29,15 @@ namespace IncidentInsight
             }
         }
 
-        public static bool FileExists(int workItemId, string folderName)
+        public static bool FileExists(string workItemId, string folderName)
         {
-            string filePath = GetFilePath(GetFolderPath(folderName), workItemId);
+            string filePath = GetFilePath(GetFolderPath(Utility.GetEnvironment(), folderName), workItemId);
             return File.Exists(filePath);
         }
 
-        public static string GetFileContent(int workItemId, string folderName)
+        public static string GetFileContent(string workItemId, string folderName)
         {
-            string filePath = GetFilePath(GetFolderPath(folderName), workItemId);
+            string filePath = GetFilePath(GetFolderPath(Utility.GetEnvironment(), folderName), workItemId);
 
             try
             {
@@ -55,21 +56,24 @@ namespace IncidentInsight
             }
         }
 
-        private static string GetFolderPath(string folderName)
+        private static string GetFolderPath(string environment, string folderName)
         {
-            string folderPath = folderName.ToLower() switch
+            string rootFolderPath = Path.Combine(
+                Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, environment);
+
+            string folderPath = Path.Combine(rootFolderPath, folderName);
+
+
+            if (!Directory.Exists(folderPath))
             {
-                "data" => Path.Combine(
-            Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "Data"),
-                "result" => Path.Combine(
-            Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "Result"),
-                _ => throw new ArgumentException($"Invalid folder name: {folderName}")
-            };
+                Console.WriteLine($"'{folderName}' folder not found for '{environment}' environment. Creating directory...");
+                Directory.CreateDirectory(folderPath);
+            }
 
             return folderPath;
         }
 
-        private static string GetFilePath(string folderPath, int workItemId)
+        private static string GetFilePath(string folderPath, string workItemId)
         {
             return Path.Combine(folderPath, $"{workItemId}.txt");
         }

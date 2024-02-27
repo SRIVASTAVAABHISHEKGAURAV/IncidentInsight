@@ -24,6 +24,7 @@ namespace TicketManager
             var connection = CreateConnection();
             return connection.GetClient<WorkItemTrackingHttpClient>();
         }
+        public static string GetEnvironment() => config.GetSection("Secrets").Get<Secret>().Environment;
         public static string GetPatToken() => config.GetSection("Secrets").Get<Secret>().PATToken;
         public static string GetOrgUri() => config.GetSection("Secrets").Get<Secret>().Uri;
         public static Uri GetUri() => new Uri(GetOrgUri());
@@ -31,6 +32,9 @@ namespace TicketManager
         public static string GetAoaiDeploymentName() => config.GetSection("Secrets").Get<Secret>().AoaiDeploymentName;
         public static string GetAoaiEndpoint() => config.GetSection("Secrets").Get<Secret>().AoaiEndpoint;
         public static string GetAoaiKey() => config.GetSection("Secrets").Get<Secret>().AoaiKey;
+        public static string GetApiToken() => config.GetSection("Secrets").Get<Secret>().ApiToken;
+        public static string GetUserName() => config.GetSection("Secrets").Get<Secret>().UserName;
+        public static string GetJiraBaseUrl() => config.GetSection("Secrets").Get<Secret>().JiraBaseUrl;
         public static string GetPrompt() => config.GetSection("Secrets").Get<Secret>().Prompt;
         public static int GetMaxTokens() => config.GetSection("Secrets").Get<Secret>().MaxTokens;
         public static string CleanHtmlTags(string input) => Regex.Replace(input, "<.*?>", string.Empty);
@@ -45,7 +49,11 @@ namespace TicketManager
             public string AoaiEndpoint { get; set; }
             public string AoaiKey { get; set; }
             public string Prompt { get; set; }
-            public int MaxTokens { get; internal set; }
+            public int MaxTokens { get; set; }
+            public string ApiToken { get; set; }
+            public string UserName { get; set; }
+            public string JiraBaseUrl { get; set; }
+            public string Environment { get; set; }
         }
     }
 }

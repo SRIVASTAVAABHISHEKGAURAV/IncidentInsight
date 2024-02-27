@@ -24,7 +24,7 @@ namespace TicketManager
             Steps taken to resolve the incident.
             Lessons learned or recommendations for future incidents.";
 
-            var summarize = kernel.CreateFunctionFromPrompt(prompt, executionSettings: new OpenAIPromptExecutionSettings { MaxTokens = 300 });
+            var summarize = kernel.CreateFunctionFromPrompt(prompt, executionSettings: new OpenAIPromptExecutionSettings { MaxTokens = Utility.GetMaxTokens() });
             return await kernel.InvokeAsync(summarize, new() { ["input"] = incidentDetails });
         }
     }
