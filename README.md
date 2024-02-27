@@ -4,7 +4,7 @@ IncidentInsight is a solution designed to fetch and summarize incident details, 
 
 ## Features
 
-- **Fetch Incident Details**: Fetches incident details from different incident management system.
+- **Fetch Incident Details**: Fetches incident details from different incident management system. e.g ADO , JIRA
 - **Summarize Incident Details**: Utilizes advanced natural language processing techniques to summarize incident details into concise and informative summaries.
 - **Easy Integration**: Simple integration with existing incident management workflows or tools.
 - **Customizable**: Flexible configuration options allow customization based on specific needs and preferences.
@@ -35,7 +35,7 @@ Edit the `config.json` file to customize settings such as API keys, data sources
     "AoaiDeploymentName": "",
     "AoaiEndpoint": "",
     "AoaiKey": "",
-    "Prompt": "Summarize the incident details provided below and present the summary in bullet points. The incident details include the following:\nBrief description of the incident.\nDate and time of the incident.\nImpact of the incident.\nSteps taken to resolve the incident.\nLessons learned or recommendations for future incidents.",
+    "Prompt": "",
     "MaxTokens": 300
   }
 }
