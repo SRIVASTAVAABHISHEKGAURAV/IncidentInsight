@@ -21,7 +21,7 @@ namespace IncidentInsight
             try
             {
                 await File.WriteAllTextAsync(filePath, content);
-                Console.WriteLine($"Content has been written to {filePath} successfully.");
+                //Console.WriteLine($"Content has been written to {filePath} successfully.");
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace IncidentInsight
             }
         }
 
-        private static string GetFolderPath(string environment, string folderName)
+        public static string GetFolderPath(string environment, string folderName)
         {
             string rootFolderPath = Path.Combine(
                 Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, environment);

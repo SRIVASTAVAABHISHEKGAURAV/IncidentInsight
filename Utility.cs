@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using IncidentInsight;
+using Microsoft.Extensions.Configuration;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
@@ -38,6 +39,22 @@ namespace TicketManager
         public static string GetPrompt() => config.GetSection("Secrets").Get<Secret>().Prompt;
         public static int GetMaxTokens() => config.GetSection("Secrets").Get<Secret>().MaxTokens;
         public static string CleanHtmlTags(string input) => Regex.Replace(input, "<.*?>", string.Empty);
+        public static void CaptureScreenShot(object summary)
+        {
+            Console.WriteLine(summary);
+            Thread.Sleep(2000);
+            var folderPath = FileHelper.GetFolderPath(Utility.GetEnvironment(), "screenshot");
+            ScreenCapture.CaptureScreen(folderPath);
+        }
+
+        public static string GetFormattedText(List<string> comments)
+        {
+            string combinedComments = string.Join(Environment.NewLine, comments);
+
+            string cleanedText = Utility.CleanHtmlTags(combinedComments);
+
+            return cleanedText;
+        }
         private static VssConnection CreateConnection() => new VssConnection(new Uri(GetOrgUri()), new VssBasicCredential(string.Empty, GetPatToken()));
 
         private class Secret

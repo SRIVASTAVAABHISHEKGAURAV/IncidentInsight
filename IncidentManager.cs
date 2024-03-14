@@ -37,6 +37,8 @@ namespace TicketManager
                 combinedComments = FileHelper.GetFileContent(Convert.ToString(workItemId), "data");
             }
             var summary = await Summarize(combinedComments);
+            Console.WriteLine(summary);
+            //Utility.CaptureScreenShot(summary);
             await FileHelper.SaveContentAsync(Convert.ToString(summary), Convert.ToString(workItemId), "result");
         }
 
@@ -52,16 +54,16 @@ namespace TicketManager
                 combinedComments = FileHelper.GetFileContent(workItemId, "data");
             }
             var summary = await Summarize(combinedComments);
+            Console.WriteLine(summary);
+            //Utility.CaptureScreenShot(summary);
             await FileHelper.SaveContentAsync(Convert.ToString(summary), workItemId, "result");
         }
 
         private static async Task<object> Summarize(string summarytext)
         {
             var summary = await SummarizationService.SummarizeIncidentDetails(summarytext);
-            Console.WriteLine(summary);
             return summary;
         }
-
         private static async Task<string> GetIssueKeyDetails(string issueKey)
         {
             using (var client = new HttpClient())
@@ -86,14 +88,13 @@ namespace TicketManager
                     {
                         string commentText = Convert.ToString(comment["body"]["content"][0]["content"][0]["text"]);
 
-                        Console.WriteLine(commentText);
                         if (!string.IsNullOrEmpty(commentText))
                         {
                             commentTexts.Add(commentText);
                         }
                     }
 
-                    return GetFormattedText(commentTexts);
+                    return Utility.GetFormattedText(commentTexts);
                 }
                 else
                 {
@@ -120,16 +121,7 @@ namespace TicketManager
                 }
             }
 
-            return GetFormattedText(comments);
-        }
-
-        private static string GetFormattedText(List<string> comments)
-        {
-            string combinedComments = string.Join(Environment.NewLine, comments);
-
-            string cleanedText = Utility.CleanHtmlTags(combinedComments);
-
-            return cleanedText;
+            return Utility.GetFormattedText(comments);
         }
 
         private static async Task SaveResult(string data, string id)
